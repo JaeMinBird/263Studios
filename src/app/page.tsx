@@ -21,9 +21,9 @@ export default function Home() {
         <h2 className="text-6xl font-bold mb-2 text-gray-900 font-space-mono">About</h2>
         
         {/* Dictionary-style breakdown */}
-        <div className="mt-4 text-gray-900 font-space-mono">
+        <div className="mt-4 text-gray-600 font-space-mono">
           <p className="text-base">
-            <span className="font-bold">2 6 3</span> <span className="italic">(noun)</span> <span className="text-gray-600">\ tuː sɪks θriː \</span>
+            <span className="font-bold">2 6 3</span> <span className="italic">(noun)</span> <span className="text-gray-500">\ tuː sɪks θriː \</span>
           </p>
           <p className="text-sm mt-2">
             <span className="font-bold">1.</span> a creative collective redefining modern fashion
@@ -37,16 +37,20 @@ export default function Home() {
         </div>
 
         {/* New Section */}
-        <div className="mt-8 text-center">
-          <p className="font-bold text-gray-900">263 STUDIOS</p>
+        <div className="mt-8 text-center text-gray-600">
+          <p className="font-bold">263 STUDIOS</p>
           <p className="mt-1">
+            <span className="text-gray-600">a project by </span>
             <a 
               href="https://jaebirdsall.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-600 underline hover:text-blue-800"
+              className="text-black hover:text-gray-800 relative group"
             >
-              a project by Jae Birdsall
+              <span className="lowercase">
+                jae birdsall
+                <span className="absolute left-0 -bottom-0.5 w-0 h-[1px] bg-black transition-all duration-300 ease-in-out group-hover:w-full"></span>
+              </span>
             </a>
           </p>
         </div>

@@ -24,7 +24,7 @@ export default function Navbar() {
         hidden: { y: "-100%" },
       }}
       animate={hidden ? "hidden" : "visible"}
-      transition={{ type: "spring", damping: 20, stiffness: 300 }}
+      transition={{ type: "tween", duration: 0.6, ease: "easeInOut" }}
     >
       <div className="container mx-auto px-4 py-4 flex justify-center">
         <Link href="/" className="font-hanken-grotesk text-xl uppercase tracking-wider text-black">
