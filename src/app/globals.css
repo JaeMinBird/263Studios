@@ -48,3 +48,7 @@ body {
 .cart-page {
   background-color: white !important;
 }
+
+html {
+  scroll-behavior: smooth;
+}
