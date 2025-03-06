@@ -5,8 +5,8 @@ import { Roboto_Mono } from "next/font/google";
 import { Hanken_Grotesk } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { Space_Mono } from "next/font/google";
-import localFont from 'next/font/local';
 import { Courier_Prime } from 'next/font/google';
+import CustomCursor from "@/components/CustomCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,6 +58,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${hankenGrotesk.variable} ${spaceMono.variable} ${courierPrime.variable} antialiased`}
       >
         <Navbar />
+        <CustomCursor />
         {children}
       </body>
     </html>
