@@ -11,17 +11,17 @@ interface CartItemProps {
 
 export default function CartItem({ name, price, style, size, isFirst, isLast }: CartItemProps) {
   return (
-    <div className={`flex items-center w-full ${!isFirst && 'border-t border-black'}`}>
-      {/* Fixed image container - back to fixed height with border */}
+    <div className={`flex items-stretch w-full ${!isFirst && 'border-t border-black'}`}>
+      {/* Image container - ensure full height */}
       <div className="w-20 h-20 bg-gray-100 border-r border-black flex-shrink-0">
         {/* Add your image here */}
         <div className="w-full h-full object-cover" />
       </div>
       
-      {/* Item details with minimal margins */}
-      <div className="flex-1 p-3 min-w-0">
-        <h2 className="font-normal font-courier-prime truncate text-sm text-black mt-0">{name}</h2>
-        <p className="text-sm font-courier-prime mt-0.5 text-black">Style: {style}</p>
+      {/* Item details - remove vertical padding */}
+      <div className="flex-1 px-3 min-w-0 flex flex-col justify-center">
+        <h2 className="font-normal font-courier-prime truncate text-sm text-black mb-0">{name}</h2>
+        <p className="text-sm font-courier-prime mt-0.5 text-black mb-0">Style: {style}</p>
         <p className="text-sm font-courier-prime mt-0.5 text-black mb-0">Size: {size}</p>
       </div>
       
