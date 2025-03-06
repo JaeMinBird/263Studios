@@ -44,3 +44,7 @@ body {
 .font-courier-prime {
   font-family: var(--font-courier-prime), Courier, monospace;
 }
+
+.cart-page {
+  background-color: white !important;
+}
