@@ -33,7 +33,8 @@ export default function CartPage() {
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-white cursor-[url('/custom-cursor.svg'),_auto]">
-      <div className="w-[50%] h-[70vh] border border-black shadow-lg bg-white flex flex-col my-8 overflow-hidden">
+      {/* Responsive container with added top margin for mobile */}
+      <div className="w-full md:w-[50%] h-[90vh] md:h-[70vh] border border-black shadow-lg bg-white flex flex-col mt-14 md:mt-0 mb-4 md:my-8 overflow-hidden">
         {/* Section 1: Cart Header */}
         <div className="p-3">
           <h1 className="text-lg font-normal mb-1 font-courier-prime text-black text-center">Cart</h1>
@@ -78,15 +79,15 @@ export default function CartPage() {
 
         {/* Section 5: Actions */}
         <div className="p-3">
-          <div className="flex justify-between items-center">
-            <p className="text-black text-sm font-courier-prime lowercase">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3">
+            <p className="text-black text-sm font-courier-prime lowercase text-center md:text-left">
               shipping calculated at checkout
             </p>
-            <div className="flex gap-4">
-              <button className="px-4 py-1 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-sm lowercase">
+            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+              <button className="w-full md:w-auto px-4 py-2 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-sm lowercase">
                 keep shopping
               </button>
-              <button className="px-4 py-1 bg-black text-white border border-black hover:bg-white hover:text-black transition-colors font-courier-prime text-sm lowercase">
+              <button className="w-full md:w-auto px-4 py-2 bg-black text-white border border-black hover:bg-white hover:text-black transition-colors font-courier-prime text-sm lowercase">
                 checkout
               </button>
             </div>
