@@ -30,7 +30,7 @@ export default function Navbar() {
         {/* Collect - Left Side */}
         <div className="ml-4 bg-white/90 backdrop-blur-sm px-3 py-1 shadow-sm">
           <Link href="/collect" className="font-courier-prime text-base lowercase tracking-wider text-black">
-            goods
+            shop
           </Link>
         </div>
         {/* 263 STUDIOS - Center */}
