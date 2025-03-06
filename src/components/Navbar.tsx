@@ -18,7 +18,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 bg-white backdrop-blur-sm"
+      className="fixed top-0 left-0 right-0 z-50 bg-transparent"
       variants={{
         visible: { y: 0 },
         hidden: { y: "-100%" },
@@ -26,10 +26,12 @@ export default function Navbar() {
       animate={hidden ? "hidden" : "visible"}
       transition={{ type: "tween", duration: 0.6, ease: "easeInOut" }}
     >
-      <div className="container mx-auto px-4 py-4 flex justify-center">
-        <Link href="/" className="font-hanken-grotesk text-xl uppercase tracking-wider text-black">
-          263 STUDIOS
-        </Link>
+      <div className="container mx-auto px-4 pt-2 pb-1 flex justify-center">
+        <div className="bg-white/90 backdrop-blur-sm px-3 py-1 shadow-sm">
+          <Link href="/" className="font-courier-prime text-base uppercase tracking-wider text-black">
+            263 STUDIOS
+          </Link>
+        </div>
       </div>
     </motion.nav>
   );

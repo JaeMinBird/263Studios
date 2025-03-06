@@ -1,29 +1,77 @@
-import Image from "next/image";
+'use client';
+import { useState, useRef } from 'react';
 
 export default function Home() {
-  return (
-    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleHover = () => {
+    setIsHovered(true);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  const handleLeave = () => {
+    setIsHovered(false);
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
+
+  return ( 
+    <div className="min-h-screen font-courier-prime">
       {/* GIF Section */}
-      <section className="relative h-[80vh] bg-black">
-        {/* Placeholder for GIF */}
-        <div className="absolute inset-0 bg-black/50 animate-pulse" />
+      <section className="relative h-[95vh] bg-black overflow-hidden">
+        {/* Video Container */}
+        <div className="absolute inset-0 w-full h-full">
+          {/* Video */}
+          <video 
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className={`absolute top-1/2 left-1/2 min-w-full min-h-full -translate-x-1/2 -translate-y-1/2 object-cover transition-all duration-300 ${
+              isHovered ? 'filter grayscale-[50%] blur-sm' : ''
+            }`}
+            preload="auto"
+            controls={false}
+          >
+            <source src="/videos/brand.mp4" type="video/mp4" />
+            <source src="/videos/brand.webp" type="video/webp" />
+            <source src="/videos/brand.ogv" type="video/ogg" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
         
         {/* Text Overlay */}
-        <div className="absolute left-[5%] bottom-[10%] font-roboto-mono font-bold text-[333%]">
-          <p>Shop</p>
-          <p>Spring /</p>
-          <p>Summer '25</p>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div 
+            className="font-courier-prime text-[133.2%] inline-block relative"
+            onMouseEnter={handleHover}
+            onMouseLeave={handleLeave}
+          >
+            {/* Subtle Blur Background */}
+            <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-lg -z-10 transition-all duration-300 group-hover:bg-black/40 group-hover:backdrop-blur-md" />
+            <a 
+              href="/shop"
+              className="block text-white/90 hover:text-white transition-all duration-300 whitespace-nowrap relative px-4 py-2 font-medium group"
+            >
+              Shop Spring // Summer '25
+            </a>
+          </div>
         </div>
       </section>
 
       {/* About Section */}
       <section className="pt-8 pb-16 bg-white flex flex-col items-center justify-center">
-        <h2 className="text-6xl font-bold mb-2 text-gray-900 font-space-mono">About</h2>
+        <h2 className="text-6xl mb-2 text-gray-900 font-courier-prime">About</h2>
         
         {/* Dictionary-style breakdown */}
-        <div className="mt-4 text-gray-600 font-space-mono">
+        <div className="mt-4 text-gray-600 text-center md:text-left font-courier-prime">
           <p className="text-base">
-            <span className="font-bold">2 6 3</span> <span className="italic">(noun)</span> <span className="text-gray-500">\ tuː sɪks θriː \</span>
+            <span className="font-bold">2 6 3</span> <span className="italic">(noun)</span> <span className="text-gray-500">/ tu: siks thri: /</span>
           </p>
           <p className="text-sm mt-2">
             <span className="font-bold">1.</span> a creative collective redefining modern fashion
@@ -36,8 +84,8 @@ export default function Home() {
           </p>
         </div>
 
-        {/* New Section */}
-        <div className="mt-8 text-center text-gray-600">
+        {/* Followup Section */}
+        <div className="mt-8 text-center text-gray-600 font-courier-prime">
           <p className="font-bold">263 STUDIOS</p>
           <p className="mt-1">
             <span className="text-gray-600">a project by </span>
