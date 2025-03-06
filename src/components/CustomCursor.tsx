@@ -54,7 +54,7 @@ export default function CustomCursor() {
       }}
       transition={{ type: 'spring', stiffness: 500, damping: 28 }}
     >
-      <div className="w-5 h-5 border border-white rounded-full" />
+      <div className="w-5 h-5 border border-gray-400 rounded-full" />
     </motion.div>
   );
 } 
