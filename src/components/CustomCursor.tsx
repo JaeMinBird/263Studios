@@ -23,20 +23,32 @@ export default function CustomCursor() {
 
     // Add event listeners
     window.addEventListener('mousemove', handleMouseMove);
-    
-    // Add hover listeners to all interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, input, [role="button"]');
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
-    });
+
+    // Function to add hover listeners to interactive elements
+    const addHoverListeners = () => {
+      const interactiveElements = document.querySelectorAll('a, button, input, [role="button"], select');
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', handleMouseEnter);
+        el.addEventListener('mouseleave', handleMouseLeave);
+      });
+    };
+
+    // Add initial listeners
+    addHoverListeners();
+
+    // Add MutationObserver to detect new elements
+    const observer = new MutationObserver(addHoverListeners);
+    observer.observe(document.body, { subtree: true, childList: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      // Remove all existing listeners
+      const interactiveElements = document.querySelectorAll('a, button, input, [role="button"], select');
       interactiveElements.forEach(el => {
         el.removeEventListener('mouseenter', handleMouseEnter);
         el.removeEventListener('mouseleave', handleMouseLeave);
       });
+      observer.disconnect();
     };
   }, [cursorX, cursorY]);
 
