@@ -7,19 +7,19 @@ import ItemWindow from '../../components/ItemWindow';
 // Sample product data
 const products = {
   jackets: [
-    { name: 'Bomber Jacket', price: 198.00, image: '/images/jacket1.jpg' },
-    { name: 'Denim Jacket', price: 168.00, image: '/images/jacket2.jpg' },
-    { name: 'Parka', price: 248.00, image: '/images/jacket3.jpg' }
+    { id: 1, name: 'Bomber Jacket', price: 198.00, image: '/images/jacket1.jpg' },
+    { id: 2, name: 'Denim Jacket', price: 168.00, image: '/images/jacket2.jpg' },
+    { id: 3, name: 'Parka', price: 248.00, image: '/images/jacket3.jpg' }
   ],
   shirts: [
-    { name: 'Box Logo Tee', price: 48.00, image: '/images/shirt1.jpg' },
-    { name: 'Striped Tee', price: 58.00, image: '/images/shirt2.jpg' },
-    { name: 'Oversized Shirt', price: 78.00, image: '/images/shirt3.jpg' }
+    { id: 4, name: 'Box Logo Tee', price: 48.00, image: '/images/shirt1.jpg' },
+    { id: 5, name: 'Striped Tee', price: 58.00, image: '/images/shirt2.jpg' },
+    { id: 6, name: 'Oversized Shirt', price: 78.00, image: '/images/shirt3.jpg' }
   ],
   pants: [
-    { name: 'Cargo Pants', price: 128.00, image: '/images/pants1.jpg' },
-    { name: 'Denim Jeans', price: 148.00, image: '/images/pants2.jpg' },
-    { name: 'Track Pants', price: 98.00, image: '/images/pants3.jpg' }
+    { id: 7, name: 'Cargo Pants', price: 128.00, image: '/images/pants1.jpg' },
+    { id: 8, name: 'Denim Jeans', price: 148.00, image: '/images/pants2.jpg' },
+    { id: 9, name: 'Track Pants', price: 98.00, image: '/images/pants3.jpg' }
   ]
 };
 
@@ -75,7 +75,7 @@ export default function CollectPage() {
       <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0 pb-20 md:pb-8">
         <ClothingHeaders activeSection={activeSection} getNavLinkClass={getNavLinkClass} isMobile />
 
-        <section id="jackets" ref={sectionRefs.jackets as React.RefObject<HTMLElement>} className="py-8 md:py-16 md:pt-24">
+        <section id="jackets" ref={sectionRefs.jackets as React.RefObject<HTMLElement>} className="pt-16 md:pt-40 pb-8 md:pb-12">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4">
             {products.jackets.map((product, index) => (
               <div key={index} className={`${
@@ -88,14 +88,14 @@ export default function CollectPage() {
                     ? 'w-1/2 md:w-full' 
                     : 'w-full'
                 }`}>
-                  <ItemWindow product={product} />
+                  <ItemWindow product={product} href={`/product/${product.id}`} />
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section id="shirts" ref={sectionRefs.shirts as React.RefObject<HTMLElement>} className="py-8 md:py-16">
+        <section id="shirts" ref={sectionRefs.shirts as React.RefObject<HTMLElement>} className="pt-16 md:pt-20 pb-8 md:pb-12">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4">
             {products.shirts.map((product, index) => (
               <div key={index} className={`${
@@ -108,14 +108,14 @@ export default function CollectPage() {
                     ? 'w-1/2 md:w-full' 
                     : 'w-full'
                 }`}>
-                  <ItemWindow product={product} />
+                  <ItemWindow product={product} href={`/product/${product.id}`} />
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section id="pants" ref={sectionRefs.pants as React.RefObject<HTMLElement>} className="py-8 md:py-16">
+        <section id="pants" ref={sectionRefs.pants as React.RefObject<HTMLElement>} className="pt-16 md:pt-20 pb-8 md:pb-12">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4">
             {products.pants.map((product, index) => (
               <div key={index} className={`${
@@ -128,7 +128,7 @@ export default function CollectPage() {
                     ? 'w-1/2 md:w-full' 
                     : 'w-full'
                 }`}>
-                  <ItemWindow product={product} />
+                  <ItemWindow product={product} href={`/product/${product.id}`} />
                 </div>
               </div>
             ))}

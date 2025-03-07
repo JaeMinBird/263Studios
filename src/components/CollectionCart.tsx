@@ -10,21 +10,21 @@ interface CollectionCartProps {
 export default function CollectionCart({ itemsInCart, subtotal, isMobile = false }: CollectionCartProps) {
   if (isMobile) {
     return (
-      <div className="w-full md:hidden fixed bottom-0 h-auto p-4 bg-white border-t border-black">
+      <div className="w-full md:hidden fixed bottom-0 h-auto p-4 bg-white border-t border-black z-50 shadow-lg">
         <div className="flex flex-col space-y-2">
           <div className="flex justify-between items-center">
-            <h2 className="font-courier-prime text-black text-sm">
+            <h2 className="font-courier-prime text-black text-sm font-bold">
               {itemsInCart} items in cart
             </h2>
-            <p className="font-courier-prime text-black text-sm">
+            <p className="font-courier-prime text-black text-sm font-bold">
               ${subtotal.toFixed(2)}
             </p>
           </div>
           <div className="flex space-x-2">
-            <Link href="/cart" className="flex-1 px-4 py-2 bg-white text-black border border-black font-courier-prime text-sm lowercase text-center">
+            <Link href="/cart" className="flex-1 px-4 py-2 bg-white text-black border border-black font-courier-prime text-sm lowercase text-center hover:bg-black hover:text-white transition-colors">
               view cart
             </Link>
-            <button className="flex-1 px-4 py-2 bg-black text-white border border-black font-courier-prime text-sm lowercase text-center">
+            <button className="flex-1 px-4 py-2 bg-black text-white border border-black font-courier-prime text-sm lowercase text-center hover:bg-white hover:text-black transition-colors">
               checkout
             </button>
           </div>
