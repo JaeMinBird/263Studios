@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import ClothingHeaders from '../../components/ClothingHeaders';
-import CollectionCart from '../../components/CollectionCart';
+import CollectionCart from '../../components/SideCart';
 import ItemWindow from '../../components/ItemWindow';
 
 // Sample product data

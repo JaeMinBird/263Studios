@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import CollectionCart from '@/components/CollectionCart';
+import CollectionCart from '@/components/SideCart';
 
 interface Product {
   id: string;
