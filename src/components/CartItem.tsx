@@ -11,7 +11,7 @@ interface CartItemProps {
 
 export default function CartItem({ name, price, style, size, isFirst, isLast }: CartItemProps) {
   return (
-    <div className={`flex items-center w-full ${!isFirst && 'border-t border-black'}`}>
+    <div className={`flex items-center w-full ${!isFirst && 'border-t border-black'} ${isLast && 'border-b border-black'}`}>
       {/* Image container - vertically centered */}
       <div className="w-20 h-20 bg-gray-100 border-r border-black flex-shrink-0 flex items-center justify-center">
         <div className="w-full h-full object-cover" />
