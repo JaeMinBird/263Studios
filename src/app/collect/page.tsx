@@ -40,7 +40,7 @@ export default function CollectPage() {
         productsData[category] = querySnapshot.docs.map(doc => ({
           id: doc.id,
           name: doc.data().name,
-          price: doc.data().price,
+          price: doc.data().price || 0,
           image: doc.data().image,
           styles: doc.data().styles,
           ...doc.data()
