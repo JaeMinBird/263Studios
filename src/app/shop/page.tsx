@@ -23,7 +23,7 @@ const products = {
   ]
 };
 
-export default function CollectPage() {
+export default function ShopPage() {
   const [itemsInCart] = useState(3);
   const [subtotal] = useState(394.00);
   const [activeSection, setActiveSection] = useState('jackets');

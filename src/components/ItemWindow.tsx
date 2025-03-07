@@ -38,8 +38,8 @@ export default function ItemWindow({ product, href }: ItemWindowProps) {
         </div>
         {/* Black border between image and text */}
         <div className="border-t border-black my-2" />
-        <div className="text-center">
-          <p className="text-sm font-medium">{product.name}</p>
+        <div className="text-center font-courier-prime">
+          <p className="text-sm font-medium text-black">{product.name}</p>
           <p className="text-sm text-gray-500">${product.price.toFixed(2)}</p>
         </div>
       </div>

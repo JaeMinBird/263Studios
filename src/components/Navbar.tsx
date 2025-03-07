@@ -47,7 +47,7 @@ export default function Navbar() {
       <div className="container mx-auto px-4 pt-2 pb-1 flex justify-around items-center">
         {/* Collect - Left Side */}
         <div className="bg-white/90 backdrop-blur-sm px-3 py-1 shadow-sm">
-          <Link href="/collect" className="font-courier-prime text-base lowercase tracking-wider text-black">
+          <Link href="/shop" className="font-courier-prime text-base lowercase tracking-wider text-black">
             shop
           </Link>
         </div>

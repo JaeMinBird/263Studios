@@ -120,7 +120,7 @@ export default function ProductPage() {
 
             {/* Keep Shopping Button */}
             <Link 
-              href="/collect"
+              href="/shop"
               className="block w-full py-2 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-sm text-center"
             >
               Keep Shopping
