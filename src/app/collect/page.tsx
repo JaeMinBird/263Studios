@@ -61,8 +61,10 @@ export default function CollectPage() {
   }, []);
 
   const getNavLinkClass = (section: string) => 
-    `w-full px-4 py-2 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-sm lowercase text-center ${
-      activeSection === section ? 'bg-black text-white' : ''
+    `w-full px-4 py-2 border border-black transition-colors font-courier-prime text-sm lowercase text-center ${
+      activeSection === section 
+        ? 'bg-black text-white' 
+        : 'bg-white text-black hover:bg-black hover:text-white'
     }`;
 
   return (
@@ -70,12 +72,68 @@ export default function CollectPage() {
       <CollectionCart itemsInCart={itemsInCart} subtotal={subtotal} />
       <CollectionCart itemsInCart={itemsInCart} subtotal={subtotal} isMobile />
 
-      <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0">
+      <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0 pb-20 md:pb-8">
         <ClothingHeaders activeSection={activeSection} getNavLinkClass={getNavLinkClass} isMobile />
 
-        <ItemWindow sectionId="jackets" sectionRef={sectionRefs.jackets as React.RefObject<HTMLElement>} products={products.jackets} />
-        <ItemWindow sectionId="shirts" sectionRef={sectionRefs.shirts as React.RefObject<HTMLElement>} products={products.shirts} />
-        <ItemWindow sectionId="pants" sectionRef={sectionRefs.pants as React.RefObject<HTMLElement>} products={products.pants} />
+        <section id="jackets" ref={sectionRefs.jackets as React.RefObject<HTMLElement>} className="py-8 md:py-16 md:pt-24">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4">
+            {products.jackets.map((product, index) => (
+              <div key={index} className={`${
+                products.jackets.length % 2 !== 0 && index === products.jackets.length - 1 
+                  ? 'col-span-2 flex justify-center md:col-span-1 md:flex-none' 
+                  : ''
+              }`}>
+                <div className={`${
+                  products.jackets.length % 2 !== 0 && index === products.jackets.length - 1 
+                    ? 'w-1/2 md:w-full' 
+                    : 'w-full'
+                }`}>
+                  <ItemWindow product={product} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="shirts" ref={sectionRefs.shirts as React.RefObject<HTMLElement>} className="py-8 md:py-16">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4">
+            {products.shirts.map((product, index) => (
+              <div key={index} className={`${
+                products.shirts.length % 2 !== 0 && index === products.shirts.length - 1 
+                  ? 'col-span-2 flex justify-center md:col-span-1 md:flex-none' 
+                  : ''
+              }`}>
+                <div className={`${
+                  products.shirts.length % 2 !== 0 && index === products.shirts.length - 1 
+                    ? 'w-1/2 md:w-full' 
+                    : 'w-full'
+                }`}>
+                  <ItemWindow product={product} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="pants" ref={sectionRefs.pants as React.RefObject<HTMLElement>} className="py-8 md:py-16">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4">
+            {products.pants.map((product, index) => (
+              <div key={index} className={`${
+                products.pants.length % 2 !== 0 && index === products.pants.length - 1 
+                  ? 'col-span-2 flex justify-center md:col-span-1 md:flex-none' 
+                  : ''
+              }`}>
+                <div className={`${
+                  products.pants.length % 2 !== 0 && index === products.pants.length - 1 
+                    ? 'w-1/2 md:w-full' 
+                    : 'w-full'
+                }`}>
+                  <ItemWindow product={product} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
 
       <ClothingHeaders activeSection={activeSection} getNavLinkClass={getNavLinkClass} />
