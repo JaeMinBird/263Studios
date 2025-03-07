@@ -1,16 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-
-interface Product {
-  name: string;
-  price: number;
-  image: string;
-}
+import { Product } from '@/types';
 
 interface ItemWindowProps {
   product: {
-    id: number;
+    id: string;
     name: string;
     price: number;
     image: string;

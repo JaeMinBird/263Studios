@@ -1,10 +1,34 @@
 import CartItem from '@/components/CartItem';
+import { db, doc, getDoc, setDoc } from '@/services/firebase';
+import { useEffect, useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { CartItem as CartItemType } from '@/types';
 
 export default function CartPage() {
-  const itemsInCart = 4;
+  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  const [itemsInCart, setItemsInCart] = useState(0);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      
+      if (user) {
+        const docRef = doc(db, 'carts', user.uid);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          setCartItems(docSnap.data().items);
+          setItemsInCart(docSnap.data().items.length);
+        }
+      }
+    };
+
+    fetchCart();
+  }, []);
 
   // Sample cart items data
-  const cartItems = [
+  const sampleCartItems = [
     {
       name: "Box Logo Tee",
       price: 48.00,

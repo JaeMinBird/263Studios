@@ -3,25 +3,8 @@ import { useState, useEffect, useRef } from 'react';
 import ClothingHeaders from '../../components/ClothingHeaders';
 import CollectionCart from '../../components/SideCart';
 import ItemWindow from '../../components/ItemWindow';
-
-// Sample product data
-const products = {
-  jackets: [
-    { id: 1, name: 'Bomber Jacket', price: 198.00, image: '/images/jacket1.jpg' },
-    { id: 2, name: 'Denim Jacket', price: 168.00, image: '/images/jacket2.jpg' },
-    { id: 3, name: 'Parka', price: 248.00, image: '/images/jacket3.jpg' }
-  ],
-  shirts: [
-    { id: 4, name: 'Box Logo Tee', price: 48.00, image: '/images/shirt1.jpg' },
-    { id: 5, name: 'Striped Tee', price: 58.00, image: '/images/shirt2.jpg' },
-    { id: 6, name: 'Oversized Shirt', price: 78.00, image: '/images/shirt3.jpg' }
-  ],
-  pants: [
-    { id: 7, name: 'Cargo Pants', price: 128.00, image: '/images/pants1.jpg' },
-    { id: 8, name: 'Denim Jeans', price: 148.00, image: '/images/pants2.jpg' },
-    { id: 9, name: 'Track Pants', price: 98.00, image: '/images/pants3.jpg' }
-  ]
-};
+import { db, collection, getDocs } from '@/services/firebase';
+import { Product } from '@/types';
 
 export default function CollectPage() {
   const [itemsInCart] = useState(3);
@@ -32,6 +15,47 @@ export default function CollectPage() {
     shirts: useRef<HTMLElement>(null),
     pants: useRef<HTMLElement>(null)
   };
+
+  const [products, setProducts] = useState<{
+    jackets: Product[];
+    shirts: Product[];
+    pants: Product[];
+  }>({
+    jackets: [],
+    shirts: [],
+    pants: []
+  });
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const categories = ['jackets', 'shirts', 'pants'];
+      const productsData: { [key: string]: Product[] } = {
+        jackets: [],
+        shirts: [],
+        pants: []
+      };
+
+      for (const category of categories) {
+        const querySnapshot = await getDocs(collection(db, category));
+        productsData[category] = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          name: doc.data().name,
+          price: doc.data().price,
+          image: doc.data().image,
+          styles: doc.data().styles,
+          ...doc.data()
+        }));
+      }
+
+      setProducts(productsData as {
+        jackets: Product[];
+        shirts: Product[];
+        pants: Product[];
+      });
+    };
+
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -108,7 +132,7 @@ export default function CollectPage() {
                     ? 'w-1/2 md:w-full' 
                     : 'w-full'
                 }`}>
-                  <ItemWindow product={product} href={`/product/${product.id}`} />
+                  <ItemWindow product={product} href={`/product/${product.id.toString()}`} />
                 </div>
               </div>
             ))}
@@ -128,7 +152,7 @@ export default function CollectPage() {
                     ? 'w-1/2 md:w-full' 
                     : 'w-full'
                 }`}>
-                  <ItemWindow product={product} href={`/product/${product.id}`} />
+                  <ItemWindow product={product} href={`/product/${product.id.toString()}`} />
                 </div>
               </div>
             ))}

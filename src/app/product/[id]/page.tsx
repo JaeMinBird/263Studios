@@ -1,39 +1,29 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import CollectionCart from '@/components/SideCart';
+import { db, doc, getDoc } from '@/services/firebase';
+import { Product } from '@/types';
 
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  style: string;
-  description: string;
-  styles: { name: string; image: string }[];
-  sizes: string[];
-}
-
-export default function ProductPage() {
+export default function ProductPage({ params }: { params: { id: string } }) {
   const [selectedStyle, setSelectedStyle] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [isInCart, setIsInCart] = useState(false);
+  const [product, setProduct] = useState<Product | null>(null);
   
-  // Sample product data - this would typically come from an API
-  const product: Product = {
-    id: '1',
-    name: 'Bomber Jacket',
-    price: 198.00,
-    image: '/images/jacket1.jpg',
-    style: 'Black',
-    description: 'A classic bomber jacket with modern tailoring. Made from premium materials for ultimate comfort and durability.',
-    styles: [
-      { name: 'Black', image: '/images/jacket1.jpg' },
-      { name: 'Navy', image: '/images/jacket2.jpg' },
-      { name: 'Olive', image: '/images/jacket3.jpg' }
-    ],
-    sizes: ['S', 'M', 'L', 'XL']
-  };
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const docRef = doc(db, 'products', params.id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setProduct(docSnap.data() as Product);
+      }
+    };
+
+    fetchProduct();
+  }, [params.id]);
+
+  if (!product || !product.styles || !product.sizes) return <div>Loading...</div>;
 
   return (
     <div className="min-h-screen bg-white flex">
