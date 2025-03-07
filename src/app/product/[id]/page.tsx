@@ -40,12 +40,12 @@ export default function ProductPage() {
       <CollectionCart itemsInCart={3} subtotal={394.00} />
       <CollectionCart itemsInCart={3} subtotal={394.00} isMobile />
 
-      <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0 pb-20 md:pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 md:px-8">
+      <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0 pb-20 md:pb-8 flex items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-2 px-4 md:px-8">
           {/* Product Image */}
-          <div className="md:-ml-16">
+          <div className="flex items-center justify-center">
             <div 
-              className="h-[400px] md:h-[600px] w-full bg-gray-100"
+              className="h-[240px] md:h-[360px] w-[240px] md:w-[360px] bg-gray-100"
               style={{ 
                 backgroundImage: `url(${product.styles[selectedStyle].image})`,
                 backgroundSize: 'cover',
@@ -56,9 +56,9 @@ export default function ProductPage() {
 
           {/* Product Details */}
           <div className="space-y-4">
-            <h1 className="text-2xl font-courier-prime text-black">{product.name}</h1>
-            <p className="text-sm font-courier-prime font-bold text-black">Style: {product.styles[selectedStyle].name}</p>
-            <p className="text-sm font-courier-prime text-gray-500">{product.description}</p>
+            <h1 className="text-xl font-courier-prime text-black">{product.name}</h1>
+            <p className="text-xs font-courier-prime font-bold text-black">Style: {product.styles[selectedStyle].name}</p>
+            <p className="text-xs font-courier-prime text-gray-500">{product.description}</p>
 
             {/* Style Selector */}
             <div className="flex space-x-2 mt-4">
@@ -66,7 +66,7 @@ export default function ProductPage() {
                 <button
                   key={index}
                   onClick={() => setSelectedStyle(index)}
-                  className={`w-16 h-16 border ${
+                  className={`w-10 h-10 border ${
                     selectedStyle === index ? 'border-black' : 'border-gray-300'
                   }`}
                   style={{ 
@@ -79,21 +79,32 @@ export default function ProductPage() {
             </div>
 
             {/* Price */}
-            <p className="text-2xl font-courier-prime text-black mt-4">
+            <p className="text-xl font-courier-prime text-black mt-4">
               ${product.price.toFixed(2)}
             </p>
 
-            {/* Size Selector */}
-            <select
-              value={selectedSize}
-              onChange={(e) => setSelectedSize(e.target.value)}
-              className="w-full border border-black p-2 font-courier-prime text-sm text-black"
-            >
-              <option value="">Select Size</option>
-              {product.sizes.map((size) => (
-                <option key={size} value={size}>{size}</option>
-              ))}
-            </select>
+            {/* Size Selector and Quantity */}
+            <div className="flex gap-2 items-center">
+              <select
+                value={selectedSize}
+                onChange={(e) => setSelectedSize(e.target.value)}
+                className="w-20 border border-black py-2 px-1 font-courier-prime text-sm text-black"
+              >
+                <option value="" className="py-1">Select Size</option>
+                {product.sizes.map((size) => (
+                  <option key={size} value={size} className="py-1">{size}</option>
+                ))}
+              </select>
+
+              {/* Quantity Selector */}
+              <select
+                className="w-20 border border-black p-2 font-courier-prime text-sm text-black"
+              >
+                {[...Array(10).keys()].map((i) => (
+                  <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+            </div>
 
             {/* Add to Cart / Remove Button */}
             <button
