@@ -21,7 +21,6 @@
 
 ::-webkit-scrollbar-thumb {
   background: var(--foreground);
-  -webkit-border-radius: 1ex;
 }
 
 ::-webkit-scrollbar-corner {
