@@ -116,10 +116,10 @@ export default function CollectPage() {
       </div>
 
       {/* Center - Product Sections */}
-      <div className="w-full md:w-2/3 mx-auto mt-16 md:mt-0">
+      <div className="w-full md:w-2/3 mx-auto mt-12 md:mt-0">
         {/* Mobile Section Headers */}
-        <div className="md:hidden sticky top-[5rem] bg-white z-10 border-t border-b border-black">
-          <div className="flex justify-center space-x-4 p-4">
+        <div className="md:hidden sticky top-[4rem] z-10 pb-4 pt-2">
+          <div className="flex justify-center space-x-4 px-4">
             <a 
               href="#jackets" 
               className={getNavLinkClass('jackets')}
@@ -145,7 +145,7 @@ export default function CollectPage() {
         <section 
           id="jackets" 
           ref={sectionRefs.jackets}
-          className="h-screen flex items-center justify-center p-4 md:p-0"
+          className="h-screen flex items-center justify-center p-4 md:p-0 pt-12 md:pt-0 pb-8"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 w-full">
             {products.jackets.map((product, index) => (
@@ -176,7 +176,7 @@ export default function CollectPage() {
         <section 
           id="shirts" 
           ref={sectionRefs.shirts}
-          className="h-screen flex items-center justify-center p-4 md:p-0"
+          className="h-screen flex items-center justify-center p-4 md:p-0 pt-12 md:pt-0 pb-8"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 w-full">
             {products.shirts.map((product, index) => (
@@ -207,7 +207,7 @@ export default function CollectPage() {
         <section 
           id="pants" 
           ref={sectionRefs.pants}
-          className="h-screen flex items-center justify-center p-4 md:p-0"
+          className="h-screen flex items-center justify-center p-4 md:p-0 pt-12 md:pt-0 pb-8"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 w-full">
             {products.pants.map((product, index) => (

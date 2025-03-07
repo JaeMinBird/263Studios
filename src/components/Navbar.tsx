@@ -10,7 +10,7 @@ export default function Navbar() {
 
   // Check if mobile on mount
   useEffect(() => {
-    const checkMobile = () => {
+    const checkMobile = (): void => {
       setIsMobile(window.innerWidth <= 768);
     };
     checkMobile();
@@ -32,16 +32,16 @@ export default function Navbar() {
     <motion.nav
       className="fixed top-0 left-0 right-0 z-50 bg-transparent"
       style={{
-        backgroundColor: isMobile ? 'white' : 'transparent',
-        borderBottom: isMobile ? '1px solid black' : 'none',
+        backgroundColor: 'transparent',
+        borderBottom: 'none',
         paddingTop: isMobile ? '1rem' : '0',
-        paddingBottom: isMobile ? '1rem' : '0'
+        paddingBottom: '0'
       }}
       variants={{
         visible: { y: 0 },
         hidden: { y: "calc(-150%)" },
       }}
-      animate={hidden ? "hidden" : "visible"}
+      animate={isMobile ? "visible" : hidden ? "hidden" : "visible"}
       transition={{ type: "tween", duration: 0.6, ease: "easeInOut" }}
     >
       <div className="container mx-auto px-4 pt-2 pb-1 flex justify-around items-center">
