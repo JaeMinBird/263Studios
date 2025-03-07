@@ -56,6 +56,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${hankenGrotesk.variable} ${spaceMono.variable} ${courierPrime.variable} antialiased`}
+        style={{
+          background: 'var(--background)',
+          color: 'var(--foreground)',
+          fontFamily: 'var(--font-geist-sans), Arial, Helvetica, sans-serif',
+          overflowY: 'scroll',
+        }}
       >
         <Navbar />
         <CustomCursor />
