@@ -34,7 +34,7 @@ export default function CartPage() {
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-white cursor-[url('/custom-cursor.svg'),_auto]">
       {/* Responsive container with added top margin for mobile */}
-      <div className="w-full md:w-[50%] h-[90vh] md:h-[70vh] border border-black shadow-lg bg-white flex flex-col mt-14 md:mt-0 mb-4 md:my-8 overflow-hidden">
+      <div className="w-full md:w-[50%] h-[90vh] md:h-[70vh] border border-black shadow-lg bg-white flex flex-col mt-14 md:mt-0 mb-2 md:my-8 overflow-hidden">
         {/* Section 1: Cart Header */}
         <div className="p-3">
           <h1 className="text-lg font-normal mb-1 font-courier-prime text-black text-center">Cart</h1>
