@@ -91,9 +91,12 @@ export default function CartPage() {
               >
                 keep shopping
               </Link>
-              <button className="w-full md:w-auto px-4 py-2 bg-black text-white border border-black hover:bg-white hover:text-black transition-colors font-courier-prime text-sm lowercase">
+              <Link 
+                href="/checkout"
+                className="w-full md:w-auto px-4 py-2 bg-black text-white border border-black hover:bg-white hover:text-black transition-colors font-courier-prime text-sm lowercase text-center"
+              >
                 checkout
-              </button>
+              </Link>
             </div>
           </div>
         </div>
