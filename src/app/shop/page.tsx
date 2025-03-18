@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import ClothingHeaders from '../../components/ClothingHeaders';
 import CollectionCart from '../../components/SideCart';
 import ItemWindow from '../../components/ItemWindow';
+import { useCart } from '@/context/CartContext';
 
 interface Product {
   id: number;
@@ -26,9 +27,9 @@ export default function ShopPage() {
     pants: []
   });
   const [loading, setLoading] = useState(true);
-  const [itemsInCart] = useState(3);
-  const [subtotal] = useState(394.00);
   const [activeSection, setActiveSection] = useState('jackets');
+  
+  const { itemCount, subtotal } = useCart();
   
   const sectionRefs = {
     jackets: useRef<HTMLElement>(null),
@@ -87,8 +88,8 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen bg-white flex">
-      <CollectionCart itemsInCart={itemsInCart} subtotal={subtotal} />
-      <CollectionCart itemsInCart={itemsInCart} subtotal={subtotal} isMobile />
+      <CollectionCart isMobile />
+      <CollectionCart />
 
       <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0 pb-20 md:pb-8">
         <ClothingHeaders activeSection={activeSection} getNavLinkClass={getNavLinkClass} isMobile />

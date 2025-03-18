@@ -1,15 +1,37 @@
 'use client';
+import { useCart } from '@/context/CartContext';
 
 interface CartItemProps {
+  id: number;
   name: string;
   price: number;
   style: string;
   size: string;
+  quantity: number;
   isFirst: boolean;
   isLast: boolean;
 }
 
-export default function CartItem({ name, price, style, size, isFirst, isLast }: CartItemProps) {
+export default function CartItem({ id, name, price, style, size, quantity, isFirst, isLast }: CartItemProps) {
+  const { updateQuantity, removeFromCart } = useCart();
+
+  const handleQuantityChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newQuantity = parseInt(e.target.value);
+    try {
+      await updateQuantity(id, newQuantity);
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  };
+
+  const handleRemove = async () => {
+    try {
+      await removeFromCart(id);
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
+  };
+
   return (
     <div className={`flex items-center w-full ${!isFirst && 'border-t border-black'} ${isLast && 'border-b border-black'}`}>
       {/* Image container - vertically centered */}
@@ -25,12 +47,19 @@ export default function CartItem({ name, price, style, size, isFirst, isLast }: 
         
         {/* Mobile controls */}
         <div className="md:hidden mt-2 flex items-center gap-2">
-          <select className="border border-black p-1 font-courier-prime text-xs w-10 text-black h-[26px]">
+          <select 
+            className="border border-black p-1 font-courier-prime text-xs w-10 text-black h-[26px]"
+            value={quantity}
+            onChange={handleQuantityChange}
+          >
             {Array.from({length: 9}, (_, i) => i + 1).map((num) => (
-              <option key={num}>{num}</option>
+              <option key={num} value={num}>{num}</option>
             ))}
           </select>
-          <button className="px-3 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-xs whitespace-nowrap h-[26px]">
+          <button 
+            className="px-3 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-xs whitespace-nowrap h-[26px]"
+            onClick={handleRemove}
+          >
             Remove
           </button>
         </div>
@@ -45,12 +74,19 @@ export default function CartItem({ name, price, style, size, isFirst, isLast }: 
       
       {/* Desktop controls */}
       <div className="hidden md:flex items-center pr-4 flex-shrink-0">
-        <select className="border border-black p-1 font-courier-prime text-xs w-10 text-black h-[26px]">
+        <select 
+          className="border border-black p-1 font-courier-prime text-xs w-10 text-black h-[26px]"
+          value={quantity}
+          onChange={handleQuantityChange}
+        >
           {Array.from({length: 9}, (_, i) => i + 1).map((num) => (
-            <option key={num}>{num}</option>
+            <option key={num} value={num}>{num}</option>
           ))}
         </select>
-        <button className="px-3 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-xs whitespace-nowrap ml-4 h-[26px]">
+        <button 
+          className="px-3 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-xs whitespace-nowrap ml-4 h-[26px]"
+          onClick={handleRemove}
+        >
           Remove
         </button>
         <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-black ml-4 min-w-[70px] text-right">

@@ -1,10 +1,22 @@
 'use client';
 
-import { useState } from 'react';
-import CartItem from '@/components/CartItem';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
+import CartItem from '@/components/CartItem';
 
 export default function CheckoutPage() {
+  const router = useRouter();
+  const { items, subtotal, itemCount } = useCart();
+  
+  // Redirect if cart is empty
+  useEffect(() => {
+    if (items.length === 0) {
+      router.push('/cart');
+    }
+  }, [items, router]);
+
   // State for form inputs
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -24,30 +36,7 @@ export default function CheckoutPage() {
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [addressLine2, setAddressLine2] = useState('');
 
-  // Sample cart items data
-  const cartItems = [
-    {
-      name: "Box Logo Tee",
-      price: 48.00,
-      style: "Black",
-      size: "M"
-    },
-    {
-      name: "Hooded Sweatshirt",
-      price: 148.00,
-      style: "Navy",
-      size: "L"
-    },
-    {
-      name: "Beanie",
-      price: 38.00,
-      style: "Red",
-      size: "One Size"
-    }
-  ];
-
   // Calculate totals
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0);
   const shipping = shippingMethod === 'express' ? 15.00 : 5.00;
   const estimatedTax = subtotal * 0.08; // 8% tax rate
   const orderTotal = subtotal + shipping + estimatedTax;
@@ -84,7 +73,7 @@ export default function CheckoutPage() {
             }`}
           >
             <div className="p-3">
-              {cartItems.map((item, index) => (
+              {items.map((item, index) => (
                 <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-gray-300'} py-2`}>
                   <div className="flex items-start">
                     {/* Image container */}
@@ -99,10 +88,13 @@ export default function CheckoutPage() {
                       <p className="text-sm font-courier-prime text-gray-600 mb-0">Size: {item.size}</p>
                     </div>
                     
-                    {/* Price */}
+                    {/* Price and quantity */}
                     <div className="ml-2">
-                      <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800">
+                      <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800 text-right">
                         ${item.price.toFixed(2)}
+                      </p>
+                      <p className="font-normal font-courier-prime whitespace-nowrap text-xs text-gray-600 text-right">
+                        x{item.quantity}
                       </p>
                     </div>
                   </div>
@@ -421,7 +413,7 @@ export default function CheckoutPage() {
               }`}
             >
               <div className="border border-gray-500 p-3 mb-3">
-                {cartItems.map((item, index) => (
+                {items.map((item, index) => (
                   <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-gray-300'} py-2`}>
                     <div className="flex items-start">
                       {/* Image container */}
@@ -436,10 +428,13 @@ export default function CheckoutPage() {
                         <p className="text-sm font-courier-prime text-gray-600 mb-0">Size: {item.size}</p>
                       </div>
                       
-                      {/* Price */}
+                      {/* Price and quantity */}
                       <div className="ml-2">
-                        <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800">
+                        <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800 text-right">
                           ${item.price.toFixed(2)}
+                        </p>
+                        <p className="font-normal font-courier-prime whitespace-nowrap text-xs text-gray-600 text-right">
+                          x{item.quantity}
                         </p>
                       </div>
                     </div>
@@ -516,7 +511,7 @@ export default function CheckoutPage() {
 
             {/* Cart Items - Scrollable with removed quantity and remove buttons */}
             <div className="flex-1 overflow-y-auto p-3">
-              {cartItems.map((item, index) => (
+              {items.map((item, index) => (
                 <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-black'} py-2`}>
                   <div className="flex items-start">
                     {/* Image container */}
@@ -531,10 +526,13 @@ export default function CheckoutPage() {
                       <p className="text-sm font-courier-prime text-gray-600 mb-0">Size: {item.size}</p>
                     </div>
                     
-                    {/* Price - maintained */}
+                    {/* Price and quantity */}
                     <div className="ml-2">
-                      <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800">
+                      <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800 text-right">
                         ${item.price.toFixed(2)}
+                      </p>
+                      <p className="font-normal font-courier-prime whitespace-nowrap text-xs text-gray-600 text-right">
+                        x{item.quantity}
                       </p>
                     </div>
                   </div>

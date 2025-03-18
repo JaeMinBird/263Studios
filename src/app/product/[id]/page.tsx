@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import CollectionCart from '@/components/SideCart';
+import { useCart } from '@/context/CartContext';
 
 interface Product {
   id: string;
@@ -20,8 +21,11 @@ export default function ProductPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [selectedStyle, setSelectedStyle] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
+  const [quantity, setQuantity] = useState(1);
   const [isInCart, setIsInCart] = useState(false);
   const [loading, setLoading] = useState(true);
+  
+  const { items, addToCart, removeFromCart } = useCart();
 
   useEffect(() => {
     if (params.id) {
@@ -38,12 +42,64 @@ export default function ProductPage() {
     }
   }, [params.id]);
 
+  // Check if this product (with same size and style) is in cart
+  useEffect(() => {
+    if (product && items.length > 0) {
+      const cartItem = items.find(item => 
+        item.productId === parseInt(product.id) && 
+        item.size === selectedSize && 
+        item.style === product.styles[selectedStyle]?.name
+      );
+      setIsInCart(!!cartItem);
+    }
+  }, [product, items, selectedStyle, selectedSize]);
+
   if (loading || !product) return <div>Loading...</div>;
+
+  const handleAddToCart = async () => {
+    if (!product) return;
+    
+    if (selectedSize === '') {
+      alert('Please select a size');
+      return;
+    }
+
+    const styleName = product.styles[selectedStyle]?.name || product.style;
+    const styleImage = product.styles[selectedStyle]?.image || product.image;
+
+    await addToCart({
+      productId: parseInt(product.id),
+      name: product.name,
+      price: product.price,
+      style: styleName,
+      size: selectedSize,
+      quantity: quantity,
+      image: styleImage
+    });
+
+    setIsInCart(true);
+  };
+
+  const handleRemoveFromCart = async () => {
+    if (!product) return;
+    
+    // Find the cart item with matching product ID, size, and style
+    const cartItem = items.find(item => 
+      item.productId === parseInt(product.id) && 
+      item.size === selectedSize && 
+      item.style === product.styles[selectedStyle]?.name
+    );
+
+    if (cartItem) {
+      await removeFromCart(cartItem.id);
+      setIsInCart(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white flex">
-      <CollectionCart itemsInCart={3} subtotal={394.00} />
-      <CollectionCart itemsInCart={3} subtotal={394.00} isMobile />
+      <CollectionCart isMobile />
+      <CollectionCart />
 
       <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0 pb-20 md:pb-8 flex items-center">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-4 md:px-12">
@@ -106,6 +162,8 @@ export default function ProductPage() {
               {/* Quantity Selector */}
               <select
                 className="w-20 border border-black p-2 font-courier-prime text-sm text-black"
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
               >
                 {[...Array(10).keys()].map((i) => (
                   <option key={i + 1} value={i + 1}>{i + 1}</option>
@@ -115,12 +173,13 @@ export default function ProductPage() {
 
             {/* Add to Cart / Remove Button */}
             <button
-              onClick={() => setIsInCart(!isInCart)}
+              onClick={isInCart ? handleRemoveFromCart : handleAddToCart}
               className={`w-full py-2 border border-black font-courier-prime text-sm ${
                 isInCart
                   ? 'bg-white text-black hover:bg-black hover:text-white'
                   : 'bg-black text-white hover:bg-white hover:text-black'
               }`}
+              disabled={selectedSize === '' && !isInCart}
             >
               {isInCart ? 'Remove from Cart' : 'Add to Cart'}
             </button>

@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import { Space_Mono } from "next/font/google";
 import { Courier_Prime } from 'next/font/google';
 import CustomCursor from "@/components/CustomCursor";
+import { CartProvider } from '@/context/CartContext';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,9 +64,11 @@ export default function RootLayout({
           overflowY: 'scroll',
         }}
       >
-        <Navbar />
-        <CustomCursor />
-        {children}
+        <CartProvider>
+          <Navbar />
+          <CustomCursor />
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

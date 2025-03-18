@@ -1,20 +1,25 @@
 'use client';
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
 
 interface CollectionCartProps {
-  itemsInCart: number;
-  subtotal: number;
   isMobile?: boolean;
 }
 
-export default function CollectionCart({ itemsInCart, subtotal, isMobile = false }: CollectionCartProps) {
+export default function CollectionCart({ isMobile = false }: CollectionCartProps) {
+  const { itemCount, subtotal, isLoading } = useCart();
+
+  if (isLoading) {
+    return null; // Prevent flash during loading
+  }
+
   if (isMobile) {
     return (
       <div className="w-full md:hidden fixed bottom-0 h-auto p-4 bg-white border-t border-black z-50 shadow-lg">
         <div className="flex flex-col space-y-2">
           <div className="flex justify-between items-center">
             <h2 className="font-courier-prime text-black text-sm font-bold">
-              {itemsInCart} items in cart
+              {itemCount} items in cart
             </h2>
             <p className="font-courier-prime text-black text-sm font-bold">
               ${subtotal.toFixed(2)}
@@ -37,7 +42,7 @@ export default function CollectionCart({ itemsInCart, subtotal, isMobile = false
     <div className="w-1/6 fixed left-0 top-0 h-screen p-8 hidden md:block">
       <div className="flex flex-col h-full justify-center">
         <h2 className="font-courier-prime text-black text-sm mb-2">
-          {itemsInCart} items in cart
+          {itemCount} items in cart
         </h2>
         <p className="font-courier-prime text-black text-sm mb-6">
           subtotal: ${subtotal.toFixed(2)}
