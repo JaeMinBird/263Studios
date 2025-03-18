@@ -1,46 +1,40 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Product {
+  id: number;
   name: string;
-  price: number;
+  price: number | string | { toString: () => string };
   image: string;
 }
 
 interface ItemWindowProps {
-  product: {
-    id: number;
-    name: string;
-    price: number;
-    image: string;
-  };
+  product: Product;
   href: string;
 }
 
 export default function ItemWindow({ product, href }: ItemWindowProps) {
+  const formattedPrice = typeof product.price === 'number' 
+    ? product.price.toFixed(2) 
+    : Number(product.price.toString()).toFixed(2);
+
   return (
-    <Link href={href} passHref>
-      <div className="cursor-pointer hover:opacity-80 transition-opacity">
-        <div className="relative aspect-square bg-gray-100">
-          <img 
-            src={product.image} 
-            alt={product.name} 
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              // Fallback to gray background if image fails to load
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-            }}
+    <Link href={href}>
+      <div className="relative group cursor-pointer">
+        <div className="aspect-w-3 aspect-h-4 overflow-hidden">
+          <Image
+            src={product.image}
+            alt={product.name}
+            width={400}
+            height={533}
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          {/* Gray placeholder that shows if image fails to load */}
-          <div className="absolute inset-0 bg-gray-100" />
         </div>
-        {/* Black border between image and text */}
-        <div className="border-t border-black my-2" />
-        <div className="text-center font-courier-prime">
-          <p className="text-sm font-medium text-black">{product.name}</p>
-          <p className="text-sm text-gray-500">${product.price.toFixed(2)}</p>
+        <div className="mt-2">
+          <h3 className="text-sm font-courier-prime">{product.name}</h3>
+          <p className="text-sm font-courier-prime">${formattedPrice}</p>
         </div>
       </div>
     </Link>

@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import CollectionCart from '@/components/SideCart';
 
@@ -15,25 +16,29 @@ interface Product {
 }
 
 export default function ProductPage() {
+  const params = useParams();
+  const [product, setProduct] = useState<Product | null>(null);
   const [selectedStyle, setSelectedStyle] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [isInCart, setIsInCart] = useState(false);
-  
-  // Sample product data - this would typically come from an API
-  const product: Product = {
-    id: '1',
-    name: 'Bomber Jacket',
-    price: 198.00,
-    image: '/images/jacket1.jpg',
-    style: 'Black',
-    description: 'A classic bomber jacket with modern tailoring. Made from premium materials for ultimate comfort and durability.',
-    styles: [
-      { name: 'Black', image: '/images/jacket1.jpg' },
-      { name: 'Navy', image: '/images/jacket2.jpg' },
-      { name: 'Olive', image: '/images/jacket3.jpg' }
-    ],
-    sizes: ['S', 'M', 'L', 'XL']
-  };
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (params.id) {
+      fetch(`/api/products/${params.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setProduct(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching product:', error);
+          setLoading(false);
+        });
+    }
+  }, [params.id]);
+
+  if (loading || !product) return <div>Loading...</div>;
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -41,13 +46,13 @@ export default function ProductPage() {
       <CollectionCart itemsInCart={3} subtotal={394.00} isMobile />
 
       <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0 pb-20 md:pb-8 flex items-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-2 px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-4 md:px-12">
           {/* Product Image */}
           <div className="flex items-center justify-center">
             <div 
               className="h-[240px] md:h-[360px] w-[240px] md:w-[360px] bg-gray-100"
               style={{ 
-                backgroundImage: `url(${product.styles[selectedStyle].image})`,
+                backgroundImage: `url(${product.styles[selectedStyle]?.image || product.image})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
               }}
@@ -55,9 +60,11 @@ export default function ProductPage() {
           </div>
 
           {/* Product Details */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:pl-6">
             <h1 className="text-xl font-courier-prime text-black">{product.name}</h1>
-            <p className="text-xs font-courier-prime font-bold text-black">Style: {product.styles[selectedStyle].name}</p>
+            <p className="text-xs font-courier-prime font-bold text-black">
+              Style: {product.styles[selectedStyle]?.name || product.style}
+            </p>
             <p className="text-xs font-courier-prime text-gray-500">{product.description}</p>
 
             {/* Style Selector */}

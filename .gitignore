@@ -39,3 +39,32 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Prisma
+/prisma/*.db
+/prisma/migrations/
+prisma/dev.db
+prisma/dev.db-journal
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Database files
+*.sqlite
+*.sqlite3
+
+# Production builds
+dist/
+build/
+
+# Cache
+.cache/
+.next/
