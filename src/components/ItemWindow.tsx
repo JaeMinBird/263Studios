@@ -32,9 +32,9 @@ export default function ItemWindow({ product, href }: ItemWindowProps) {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
-        <div className="mt-2">
-          <h3 className="text-sm font-courier-prime">{product.name}</h3>
-          <p className="text-sm font-courier-prime">${formattedPrice}</p>
+        <div className="mt-2 font-courier-prime text-center px-2">
+          <h3 className="text-black text-sm truncate">{product.name}</h3>
+          <p className="text-gray-700 text-sm">${formattedPrice}</p>
         </div>
       </div>
     </Link>
