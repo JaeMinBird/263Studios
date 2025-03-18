@@ -62,11 +62,10 @@ export default function CheckoutPage() {
             className="flex justify-between items-center w-full cursor-pointer" 
             onClick={() => setOrderSummaryOpen(!orderSummaryOpen)}
           >
-            <span className="font-courier-prime text-black text-sm">order summary</span>
             <div className="flex items-center">
-              <span className="font-courier-prime text-black text-sm mr-2">${subtotal.toFixed(2)}</span>
+              <span className="font-courier-prime text-black text-sm">order summary</span>
               <svg 
-                className={`w-4 h-4 transition-transform ${orderSummaryOpen ? 'rotate-180' : ''}`}
+                className={`w-4 h-4 transition-transform ml-2 text-black ${orderSummaryOpen ? 'rotate-180' : ''}`}
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
@@ -75,72 +74,75 @@ export default function CheckoutPage() {
                 <path d="M19 9l-7 7-7-7" />
               </svg>
             </div>
+            <span className="font-courier-prime text-black text-sm">${subtotal.toFixed(2)}</span>
           </div>
         </div>
 
         {/* Mobile Order Summary Content */}
-        {orderSummaryOpen && (
-          <div className="md:hidden w-full border-b border-black">
-            <div className="p-3 max-h-[300px] overflow-y-auto">
-              {cartItems.map((item, index) => (
-                <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-black'} py-2`}>
-                  <div className="flex items-start">
-                    {/* Image container */}
-                    <div className="w-16 h-16 bg-gray-100 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3">
-                      <div className="w-full h-full object-cover" />
-                    </div>
-                    
-                    {/* Item details */}
-                    <div className="flex-1 min-w-0">
-                      <h2 className="font-normal font-courier-prime truncate text-sm text-gray-800 mb-1">{item.name}</h2>
-                      <p className="text-sm font-courier-prime text-gray-600 mb-1">Style: {item.style}</p>
-                      <p className="text-sm font-courier-prime text-gray-600 mb-0">Size: {item.size}</p>
-                    </div>
-                    
-                    {/* Price */}
-                    <div className="ml-2">
-                      <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800">
-                        ${item.price.toFixed(2)}
-                      </p>
-                    </div>
+        <div 
+          className={`md:hidden w-full border-b border-black transition-all duration-300 ease-in-out overflow-hidden ${
+            orderSummaryOpen ? 'max-h-[500px]' : 'max-h-0'
+          }`}
+        >
+          <div className="p-3 max-h-[300px] overflow-y-auto border-b border-black">
+            {cartItems.map((item, index) => (
+              <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-black'} py-2`}>
+                <div className="flex items-start">
+                  {/* Image container */}
+                  <div className="w-16 h-16 bg-gray-100 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3">
+                    <div className="w-full h-full object-cover" />
+                  </div>
+                  
+                  {/* Item details */}
+                  <div className="flex-1 min-w-0">
+                    <h2 className="font-normal font-courier-prime truncate text-sm text-gray-800 mb-1">{item.name}</h2>
+                    <p className="text-sm font-courier-prime text-gray-600 mb-1">Style: {item.style}</p>
+                    <p className="text-sm font-courier-prime text-gray-600 mb-0">Size: {item.size}</p>
+                  </div>
+                  
+                  {/* Price */}
+                  <div className="ml-2">
+                    <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800">
+                      ${item.price.toFixed(2)}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="p-3 bg-white">
-              <div className="flex justify-between items-center mb-2">
-                <input
-                  type="text"
-                  placeholder="discount code"
-                  className="flex-1 p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black"
-                  value={discountCode}
-                  onChange={(e) => setDiscountCode(e.target.value)}
-                />
-                <button className="ml-2 px-4 py-2 border border-gray-500 text-gray-700 hover:border-black hover:text-gray-900 transition-colors font-courier-prime text-sm">
-                  Apply
-                </button>
               </div>
-              <div className="space-y-1 font-courier-prime text-sm text-black">
-                <div className="flex justify-between">
-                  <span>subtotal:</span>
-                  <span>${subtotal.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>shipping:</span>
-                  <span>${shipping.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>estimated taxes:</span>
-                  <span>${estimatedTax.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between font-medium pt-1 border-t border-gray-200">
-                  <span>order total:</span>
-                  <span>${orderTotal.toFixed(2)}</span>
-                </div>
+            ))}
+          </div>
+          <div className="p-3 bg-white">
+            <div className="flex justify-between items-center mb-2">
+              <input
+                type="text"
+                placeholder="discount code"
+                className="flex-1 p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black"
+                value={discountCode}
+                onChange={(e) => setDiscountCode(e.target.value)}
+              />
+              <button className="ml-2 px-4 py-2 border border-gray-500 text-gray-700 hover:border-black hover:text-gray-900 transition-colors font-courier-prime text-sm">
+                Apply
+              </button>
+            </div>
+            <div className="space-y-1 font-courier-prime text-sm text-black">
+              <div className="flex justify-between">
+                <span>subtotal:</span>
+                <span>${subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>shipping:</span>
+                <span>${shipping.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>estimated taxes:</span>
+                <span>${estimatedTax.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between font-medium pt-1 border-t border-gray-200">
+                <span>order total:</span>
+                <span>${orderTotal.toFixed(2)}</span>
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Left Section - Checkout Form */}
         <div className="w-full md:w-[60%] h-auto md:h-[75vh] md:overflow-y-auto p-4 bg-white">
