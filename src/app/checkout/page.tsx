@@ -83,27 +83,40 @@ export default function CheckoutPage() {
           <div className="md:hidden w-full border-b border-black">
             <div className="p-3 max-h-[300px] overflow-y-auto">
               {cartItems.map((item, index) => (
-                <CartItem
-                  key={index}
-                  name={item.name}
-                  price={item.price}
-                  style={item.style}
-                  size={item.size}
-                  isFirst={index === 0}
-                  isLast={index === cartItems.length - 1}
-                />
+                <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-black'} py-2`}>
+                  <div className="flex items-start">
+                    {/* Image container */}
+                    <div className="w-16 h-16 bg-gray-100 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3">
+                      <div className="w-full h-full object-cover" />
+                    </div>
+                    
+                    {/* Item details */}
+                    <div className="flex-1 min-w-0">
+                      <h2 className="font-normal font-courier-prime truncate text-sm text-gray-800 mb-1">{item.name}</h2>
+                      <p className="text-sm font-courier-prime text-gray-600 mb-1">Style: {item.style}</p>
+                      <p className="text-sm font-courier-prime text-gray-600 mb-0">Size: {item.size}</p>
+                    </div>
+                    
+                    {/* Price */}
+                    <div className="ml-2">
+                      <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800">
+                        ${item.price.toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
             <div className="p-3 bg-white">
               <div className="flex justify-between items-center mb-2">
                 <input
                   type="text"
-                  placeholder="Discount code"
-                  className="flex-1 p-2 border border-black font-courier-prime text-sm"
+                  placeholder="discount code"
+                  className="flex-1 p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black"
                   value={discountCode}
                   onChange={(e) => setDiscountCode(e.target.value)}
                 />
-                <button className="ml-2 px-4 py-2 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-sm">
+                <button className="ml-2 px-4 py-2 border border-gray-500 text-gray-700 hover:border-black hover:text-gray-900 transition-colors font-courier-prime text-sm">
                   Apply
                 </button>
               </div>
@@ -131,7 +144,7 @@ export default function CheckoutPage() {
 
         {/* Left Section - Checkout Form */}
         <div className="w-full md:w-[60%] h-auto md:h-[75vh] md:overflow-y-auto p-4 bg-white">
-          {/* Express Checkout */}
+          {/* Express Checkout - moved to the top */}
           <div className="mb-6">
             <h2 className="text-sm font-normal mb-3 font-courier-prime text-gray-800 text-center">
               express checkout
@@ -270,101 +283,105 @@ export default function CheckoutPage() {
               payment information
             </h2>
             <div className="border-b border-gray-400 mb-3"></div>
-            <div className="flex flex-col gap-0">
+            
+            {/* Payment selectors with animation restored */}
+            <div className="relative border border-gray-500 overflow-hidden">
               {/* Credit Card Option */}
-              <div>
-                <div
-                  className={`p-3 border cursor-pointer border-b-0 ${
-                    paymentMethod === 'credit-card' 
-                      ? 'border-black bg-gray-100 text-gray-800' 
-                      : 'border-gray-500 bg-white text-gray-700'
-                  }`}
-                  onClick={() => setPaymentMethod(paymentMethod === 'credit-card' ? '' : 'credit-card')}
-                >
-                  <span className="font-courier-prime text-sm">credit card</span>
+              <div 
+                className={`p-3 flex items-center cursor-pointer transition-all duration-300 ${
+                  paymentMethod === 'credit-card' ? 'bg-gray-100' : 'bg-white'
+                } ${paymentMethod === '' ? 'border-b border-black' : ''}`}
+                onClick={() => setPaymentMethod('credit-card')}
+              >
+                <div className={`w-5 h-5 rounded-full border flex-shrink-0 mr-3 flex items-center justify-center ${
+                  paymentMethod === 'credit-card' 
+                    ? 'border-black' 
+                    : 'border-gray-500'
+                }`}>
+                  {paymentMethod === 'credit-card' && (
+                    <div className="w-3 h-3 rounded-full bg-gray-800"></div>
+                  )}
                 </div>
-                
-                <div 
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    paymentMethod === 'credit-card' 
-                      ? 'max-h-[500px] opacity-100' 
-                      : 'max-h-0 opacity-0'
-                  }`}
-                  style={{ minHeight: paymentMethod === 'credit-card' ? '180px' : '0' }}
-                >
-                  <div className="p-3 border border-gray-500 border-t-0">
-                    <div className="grid grid-cols-1 gap-3">
+                <span className="font-courier-prime text-sm text-gray-700">credit card</span>
+              </div>
+              
+              {/* Content Container with animation */}
+              <div 
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                  paymentMethod === 'credit-card' ? 'h-[160px]' : 'h-0'
+                }`}
+              >
+                <div className="p-3 border-t border-gray-300 h-full">
+                  <div className="grid grid-cols-1 gap-3">
+                    <input
+                      type="text"
+                      placeholder="card number"
+                      className="p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black"
+                      value={cardNumber}
+                      onChange={(e) => setCardNumber(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="name on card"
+                      className="p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black"
+                      value={cardName}
+                      onChange={(e) => setCardName(e.target.value)}
+                    />
+                    <div className="flex gap-2">
                       <input
                         type="text"
-                        placeholder="card number"
-                        className="p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black"
-                        value={cardNumber}
-                        onChange={(e) => setCardNumber(e.target.value)}
+                        placeholder="mm/yy"
+                        className="p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black w-1/2"
+                        value={expiryDate}
+                        onChange={(e) => setExpiryDate(e.target.value)}
                       />
                       <input
                         type="text"
-                        placeholder="name on card"
-                        className="p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black"
-                        value={cardName}
-                        onChange={(e) => setCardName(e.target.value)}
+                        placeholder="cvv"
+                        className="p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black w-1/2"
+                        value={cvv}
+                        onChange={(e) => setCvv(e.target.value)}
                       />
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          placeholder="mm/yy"
-                          className="p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black w-1/2"
-                          value={expiryDate}
-                          onChange={(e) => setExpiryDate(e.target.value)}
-                        />
-                        <input
-                          type="text"
-                          placeholder="cvv"
-                          className="p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black w-1/2"
-                          value={cvv}
-                          onChange={(e) => setCvv(e.target.value)}
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               
-              {/* Dividing line between payment options */}
-              <div className="border-t border-gray-400"></div>
-              
               {/* PayPal Option */}
-              <div>
-                <div
-                  className={`p-3 border cursor-pointer border-t-0 ${
-                    paymentMethod === 'paypal' 
-                      ? 'border-black bg-gray-100 text-gray-800' 
-                      : 'border-gray-500 bg-white text-gray-700'
-                  }`}
-                  onClick={() => setPaymentMethod(paymentMethod === 'paypal' ? '' : 'paypal')}
-                >
-                  <span className="font-courier-prime text-sm">paypal</span>
+              <div 
+                className={`p-3 flex items-center cursor-pointer transition-all duration-300 ${
+                  paymentMethod === 'paypal' 
+                    ? 'bg-gray-100 border-t border-b border-t-black border-b-gray-300' 
+                    : paymentMethod === 'credit-card'
+                      ? 'bg-white border-t border-gray-500'
+                      : 'bg-white'
+                }`}
+                onClick={() => setPaymentMethod('paypal')}
+              >
+                <div className={`w-5 h-5 rounded-full border flex-shrink-0 mr-3 flex items-center justify-center ${
+                  paymentMethod === 'paypal' 
+                    ? 'border-black' 
+                    : 'border-gray-500'
+                }`}>
+                  {paymentMethod === 'paypal' && (
+                    <div className="w-3 h-3 rounded-full bg-gray-800"></div>
+                  )}
                 </div>
-                
-                <div 
-                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                    paymentMethod === 'paypal' 
-                      ? 'max-h-[500px] opacity-100' 
-                      : 'max-h-0 opacity-0'
-                  }`}
-                  style={{ minHeight: paymentMethod === 'paypal' ? '180px' : '0' }}
-                >
-                  <div className="p-3 border border-gray-500 border-t-0 flex items-center justify-center" style={{ height: '180px' }}>
-                    <div>
-                      <p className="font-courier-prime text-sm text-gray-600 text-center mb-4">you will be redirected to paypal to complete your payment.</p>
-                      <div className="flex justify-center">
-                        <img 
-                          src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/C2/logos-buttons/optimize/44_Grey_PayPal_Pill_Button.png" 
-                          alt="PayPal" 
-                          className="h-10"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                <span className="font-courier-prime text-sm text-gray-700">paypal</span>
+              </div>
+            </div>
+            
+            {/* PayPal Content with animation - adjusted positioning to be lower */}
+            <div 
+              className={`transition-all duration-300 ease-in-out overflow-hidden border-l border-r border-b border-gray-500 ${
+                paymentMethod === 'paypal' ? 'h-[160px] -mt-[46px]' : 'h-0 -mt-0 border-0'
+              }`}
+            >
+              <div className="p-3 border-t border-gray-300 h-full flex items-center justify-center">
+                <div className="flex flex-col justify-center items-center translate-y-5">
+                  <p className="font-courier-prime text-sm text-gray-600 text-center max-w-[80%] mx-auto">
+                    after clicking "pay with paypal", you will be redirected to paypal to complete your purchase securely.
+                  </p>
                 </div>
               </div>
             </div>
@@ -395,13 +412,15 @@ export default function CheckoutPage() {
             </Link>
             <button 
               className={`px-4 py-2 font-courier-prime text-sm w-full md:w-1/2 border ${
-                termsAccepted 
-                  ? 'border-black bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 transition-colors' 
-                  : 'border-gray-400 bg-gray-200 text-gray-500 cursor-not-allowed'
+                !termsAccepted 
+                  ? 'border-gray-400 bg-gray-200 text-gray-500 cursor-not-allowed'
+                  : paymentMethod === 'paypal'
+                    ? 'border-[#0070ba] bg-[#0070ba] text-white hover:bg-[#005ea6] transition-colors'
+                    : 'border-black bg-gray-800 text-white hover:bg-gray-100 hover:text-gray-800 transition-colors'
               }`}
               disabled={!termsAccepted}
             >
-              process payment
+              {paymentMethod === 'paypal' ? 'pay with paypal' : 'process payment'}
             </button>
           </div>
         </div>
@@ -414,34 +433,46 @@ export default function CheckoutPage() {
             </div>
             <div className="border-b border-black"></div>
 
-            {/* Cart Items - Scrollable */}
+            {/* Cart Items - Scrollable with removed quantity and remove buttons */}
             <div className="flex-1 overflow-y-auto p-3">
               {cartItems.map((item, index) => (
-                <div key={index} className="mb-2">
-                  <CartItem
-                    name={item.name}
-                    price={item.price}
-                    style={item.style}
-                    size={item.size}
-                    isFirst={index === 0}
-                    isLast={index === cartItems.length - 1}
-                  />
+                <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-black'} py-2`}>
+                  <div className="flex items-start">
+                    {/* Image container */}
+                    <div className="w-20 h-20 bg-gray-100 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3">
+                      <div className="w-full h-full object-cover" />
+                    </div>
+                    
+                    {/* Item details - now with more space */}
+                    <div className="flex-1 min-w-0">
+                      <h2 className="font-normal font-courier-prime truncate text-sm text-gray-800 mb-1">{item.name}</h2>
+                      <p className="text-sm font-courier-prime text-gray-600 mb-1">Style: {item.style}</p>
+                      <p className="text-sm font-courier-prime text-gray-600 mb-0">Size: {item.size}</p>
+                    </div>
+                    
+                    {/* Price - maintained */}
+                    <div className="ml-2">
+                      <p className="font-normal font-courier-prime whitespace-nowrap text-sm text-gray-800">
+                        ${item.price.toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
             <div className="border-b border-black"></div>
 
-            {/* Order Calculation */}
+            {/* Order Calculation with lowercase discount code input */}
             <div className="p-3 bg-white">
               <div className="flex justify-between items-center mb-3">
                 <input
                   type="text"
-                  placeholder="Discount code"
-                  className="flex-1 p-2 border border-black font-courier-prime text-sm"
+                  placeholder="discount code"
+                  className="flex-1 p-2 border border-gray-500 font-courier-prime text-sm text-gray-700 placeholder-gray-500 focus:outline-none focus:border-black"
                   value={discountCode}
                   onChange={(e) => setDiscountCode(e.target.value)}
                 />
-                <button className="ml-2 px-4 py-2 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-sm">
+                <button className="ml-2 px-4 py-2 border border-gray-500 text-gray-700 hover:border-black hover:text-gray-900 transition-colors font-courier-prime text-sm">
                   Apply
                 </button>
               </div>
