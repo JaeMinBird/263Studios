@@ -24,9 +24,9 @@ export default function CollectionCart({ itemsInCart, subtotal, isMobile = false
             <Link href="/cart" className="flex-1 px-4 py-2 bg-white text-black border border-black font-courier-prime text-sm lowercase text-center hover:bg-black hover:text-white transition-colors">
               view cart
             </Link>
-            <button className="flex-1 px-4 py-2 bg-black text-white border border-black font-courier-prime text-sm lowercase text-center hover:bg-white hover:text-black transition-colors">
+            <Link href="/checkout" className="flex-1 px-4 py-2 bg-black text-white border border-black font-courier-prime text-sm lowercase text-center hover:bg-white hover:text-black transition-colors">
               checkout
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -45,9 +45,9 @@ export default function CollectionCart({ itemsInCart, subtotal, isMobile = false
         <Link href="/cart" className="w-full px-4 py-2 border border-black text-black hover:bg-black hover:text-white transition-colors font-courier-prime text-sm lowercase mb-2 text-center">
           view cart
         </Link>
-        <button className="w-full px-4 py-2 bg-black text-white border border-black hover:bg-white hover:text-black transition-colors font-courier-prime text-sm lowercase">
+        <Link href="/checkout" className="w-full px-4 py-2 bg-black text-white border border-black hover:bg-white hover:text-black transition-colors font-courier-prime text-sm lowercase text-center">
           checkout
-        </button>
+        </Link>
       </div>
     </div>
   );
