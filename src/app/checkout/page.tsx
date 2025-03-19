@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import CartItem from '@/components/CartItem';
 
@@ -77,8 +78,18 @@ export default function CheckoutPage() {
                 <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-gray-300'} py-2`}>
                   <div className="flex items-start">
                     {/* Image container */}
-                    <div className="w-16 h-16 bg-gray-100 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3">
-                      <div className="w-full h-full object-cover" />
+                    <div className="w-16 h-16 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={64}
+                          height={64}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-100" />
+                      )}
                     </div>
                     
                     {/* Item details */}
@@ -417,8 +428,18 @@ export default function CheckoutPage() {
                   <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-gray-300'} py-2`}>
                     <div className="flex items-start">
                       {/* Image container */}
-                      <div className="w-16 h-16 bg-gray-100 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3">
-                        <div className="w-full h-full object-cover" />
+                      <div className="w-16 h-16 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
+                        {item.image ? (
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            width={64}
+                            height={64}
+                            className="object-cover w-full h-full"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gray-100" />
+                        )}
                       </div>
                       
                       {/* Item details */}
@@ -515,8 +536,18 @@ export default function CheckoutPage() {
                 <div key={index} className={`mb-2 ${index !== 0 && 'border-t border-black'} py-2`}>
                   <div className="flex items-start">
                     {/* Image container */}
-                    <div className="w-20 h-20 bg-gray-100 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3">
-                      <div className="w-full h-full object-cover" />
+                    <div className="w-20 h-20 border border-gray-500 flex-shrink-0 flex items-center justify-center mr-3 overflow-hidden">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={80}
+                          height={80}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-100" />
+                      )}
                     </div>
                     
                     {/* Item details - now with more space */}

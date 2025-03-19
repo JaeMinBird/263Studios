@@ -1,5 +1,6 @@
 'use client';
 import { useCart } from '@/context/CartContext';
+import Image from 'next/image';
 
 interface CartItemProps {
   id: number;
@@ -10,9 +11,10 @@ interface CartItemProps {
   quantity: number;
   isFirst: boolean;
   isLast: boolean;
+  image?: string;
 }
 
-export default function CartItem({ id, name, price, style, size, quantity, isFirst, isLast }: CartItemProps) {
+export default function CartItem({ id, name, price, style, size, quantity, isFirst, isLast, image }: CartItemProps) {
   const { updateQuantity, removeFromCart } = useCart();
 
   const handleQuantityChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -35,8 +37,18 @@ export default function CartItem({ id, name, price, style, size, quantity, isFir
   return (
     <div className={`flex items-center w-full ${!isFirst && 'border-t border-black'} ${isLast && 'border-b border-black'}`}>
       {/* Image container - vertically centered */}
-      <div className="w-20 h-20 bg-gray-100 border-r border-black flex-shrink-0 flex items-center justify-center">
-        <div className="w-full h-full object-cover" />
+      <div className="w-20 h-20 border-r border-black flex-shrink-0 flex items-center justify-center overflow-hidden">
+        {image ? (
+          <Image
+            src={image}
+            alt={name}
+            width={80}
+            height={80}
+            className="object-cover w-full h-full"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-100" />
+        )}
       </div>
       
       {/* Item details */}

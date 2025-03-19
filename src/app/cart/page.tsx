@@ -38,6 +38,7 @@ export default function CartPage() {
                   style={item.style}
                   size={item.size}
                   quantity={item.quantity}
+                  image={item.image}
                   isFirst={index === 0}
                   isLast={index === items.length - 1}
                 />
