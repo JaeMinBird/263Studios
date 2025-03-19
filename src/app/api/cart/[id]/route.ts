@@ -59,7 +59,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const cartId = cookies().get('cartId')?.value;
+    const cartId = (await cookies()).get('cartId')?.value;
     
     if (!cartId) {
       return NextResponse.json({ error: 'No cart found' }, { status: 404 });
