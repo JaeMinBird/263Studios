@@ -41,49 +41,48 @@ export const SkeletonProductGrid = () => {
 
 export const ProductDetailSkeleton = () => {
   return (
-    <div className="w-full md:w-2/3 mx-auto mt-24 md:mt-20 pb-20 md:pb-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-4 md:px-12 w-full">
-        {/* Product Image - matches exact dimensions in your product page */}
-        <div className="flex items-center justify-center">
-          <Skeleton className="h-[240px] md:h-[360px] w-[240px] md:w-[360px]" />
-        </div>
-        
-        {/* Product Details */}
-        <div className="flex flex-col mt-8 md:mt-0">
-          <Skeleton className="h-6 w-3/4 mb-2" />
-          <Skeleton className="h-5 w-1/4 mb-4" />
+    <>
+      {/* Add a white background at the top to cover any dark areas */}
+      <div className="w-full h-24 bg-white fixed top-0 left-0 right-0 z-10"></div>
+      
+      <div className="w-full md:w-2/3 mx-auto mt-24 md:mt-24 pb-20 md:pb-8 flex items-center justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-4 md:px-12 w-full">
+          {/* Product Image - matches exact dimensions in your product page */}
+          <div className="flex items-center justify-center">
+            <Skeleton className="h-[240px] md:h-[360px] w-[240px] md:w-[360px]" />
+          </div>
           
-          {/* Style selection */}
-          <div className="mb-6">
-            <Skeleton className="h-4 w-1/4 mb-2" />
-            <div className="flex space-x-2">
+          {/* Product Details */}
+          <div className="flex flex-col mt-8 md:mt-0 space-y-4 md:pl-6">
+            <Skeleton className="h-6 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-3 w-full" />
+            
+            {/* Style selection */}
+            <div className="flex space-x-2 mt-4">
               {[...Array(3)].map((_, i) => (
-                <Skeleton key={i} className="h-12 w-12 border border-gray-300" />
+                <Skeleton key={i} className="h-10 w-10 border border-gray-300" />
               ))}
             </div>
-          </div>
-          
-          {/* Size selection */}
-          <div className="mb-6">
-            <Skeleton className="h-4 w-1/4 mb-2" />
-            <div className="flex flex-wrap gap-2">
-              {[...Array(4)].map((_, i) => (
-                <Skeleton key={i} className="h-10 w-14" />
-              ))}
+            
+            {/* Price */}
+            <Skeleton className="h-6 w-24 mt-4" />
+            
+            {/* Size and quantity selectors */}
+            <div className="flex gap-2 items-center">
+              <Skeleton className="h-10 w-20" />
+              <Skeleton className="h-10 w-20" />
             </div>
+            
+            {/* Add to cart button */}
+            <Skeleton className="h-10 w-full" />
+            
+            {/* Keep shopping button */}
+            <Skeleton className="h-10 w-full" />
           </div>
-          
-          {/* Quantity */}
-          <div className="flex items-center mb-6 space-x-2">
-            <Skeleton className="h-4 w-16 mb-2" />
-            <Skeleton className="h-10 w-28" />
-          </div>
-          
-          {/* Add to cart button */}
-          <Skeleton className="h-12 w-full" />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -175,6 +174,9 @@ export const ShopPageSkeleton = () => {
       </div>
       
       <div className="w-full md:w-2/3 mx-auto mt-10 md:mt-0 pb-20 md:pb-8">
+        {/* Add empty space where header would be, with white background */}
+        <div className="h-16 bg-white w-full"></div>
+        
         {/* Jackets Section */}
         <section id="jackets" className="pt-16 md:pt-40 pb-8 md:pb-12">
           <h2 className="text-2xl mb-8 text-center font-courier-prime">
