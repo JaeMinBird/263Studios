@@ -4,6 +4,9 @@ import ClothingHeaders from '../../components/ClothingHeaders';
 import CollectionCart from '../../components/SideCart';
 import ItemWindow from '../../components/ItemWindow';
 import { useCart } from '@/context/CartContext';
+import { SkeletonProductGrid } from '@/components/SkeletonLoader';
+import { Skeleton } from '@/components/SkeletonLoader';
+import { ShopPageSkeleton } from '@/components/SkeletonLoader';
 
 interface Product {
   id: number;
@@ -26,7 +29,7 @@ export default function ShopPage() {
     shirts: [],
     pants: []
   });
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('jackets');
   
   const { itemCount, subtotal } = useCart();
@@ -42,11 +45,11 @@ export default function ShopPage() {
       .then(res => res.json())
       .then(data => {
         setProducts(data);
-        setLoading(false);
+        setIsLoading(false);
       })
       .catch(error => {
         console.error('Error fetching products:', error);
-        setLoading(false);
+        setIsLoading(false);
       });
   }, []);
 
@@ -84,7 +87,9 @@ export default function ShopPage() {
         : 'bg-white text-black hover:bg-black hover:text-white'
     }`;
 
-  if (loading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <ShopPageSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-white flex">

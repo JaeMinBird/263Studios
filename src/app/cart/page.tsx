@@ -1,11 +1,30 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CartItem from '@/components/CartItem';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { CartPageSkeleton } from '@/components/SkeletonLoader';
 
 export default function CartPage() {
   const { items, subtotal, itemCount } = useCart();
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    // Short timeout to show skeleton - you could remove this if you want it to be instant
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white cart-page">
+        <CartPageSkeleton />
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4 bg-white cursor-[url('/custom-cursor.svg'),_auto]">

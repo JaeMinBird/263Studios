@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import CollectionCart from '@/components/SideCart';
 import { useCart } from '@/context/CartContext';
+import { ProductDetailSkeleton } from '@/components/SkeletonLoader';
 
 interface Product {
   id: string;
@@ -54,7 +55,15 @@ export default function ProductPage() {
     }
   }, [product, items, selectedStyle, selectedSize]);
 
-  if (loading || !product) return <div>Loading...</div>;
+  if (loading || !product) {
+    return (
+      <div className="min-h-screen bg-white">
+        <CollectionCart isMobile />
+        <CollectionCart />
+        <ProductDetailSkeleton />
+      </div>
+    );
+  }
 
   const handleAddToCart = async () => {
     if (!product) return;
