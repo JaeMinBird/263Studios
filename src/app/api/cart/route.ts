@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
 // Helper to get cart ID from cookie
-function getCartId() {
-  const cookieStore = cookies();
+async function getCartId() {
+  const cookieStore = await cookies();
   let cartId = cookieStore.get('cartId')?.value;
   
   return cartId;
@@ -12,8 +12,8 @@ function getCartId() {
 
 // Ensure user has a cart
 async function ensureCart() {
-  const cookieStore = cookies();
-  let cartId = getCartId();
+  const cookieStore = await cookies();
+  let cartId = await getCartId();
   
   if (!cartId) {
     // Create a new cart
@@ -35,7 +35,7 @@ async function ensureCart() {
 // GET /api/cart - Get cart contents
 export async function GET() {
   try {
-    const cartId = getCartId();
+    const cartId = await getCartId();
     
     if (!cartId) {
       return NextResponse.json({ items: [] });
@@ -151,7 +151,7 @@ export async function POST(request: Request) {
 // DELETE /api/cart - Clear cart
 export async function DELETE() {
   try {
-    const cartId = getCartId();
+    const cartId = await getCartId();
     
     if (!cartId) {
       return NextResponse.json({ success: true });
