@@ -15,11 +15,10 @@ export async function PATCH(
       return NextResponse.json({ error: 'No cart found' }, { status: 404 });
     }
     
-    // Store params in a separate variable first
-    const params = context.params;
-    // Access the id afterward and convert to a string immediately
-    const idString = String(params?.id || '');
-    // Then parse it
+    // Extract ID from URL directly
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const idString = pathParts[pathParts.length - 1];
     const itemId = parseInt(idString);
     
     const { quantity } = await request.json();
@@ -56,16 +55,21 @@ export async function PATCH(
 // DELETE /api/cart/[id] - Remove item from cart
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const cartId = (await cookies()).get('cartId')?.value;
+    const cookieStore = await cookies();
+    const cartId = cookieStore.get('cartId')?.value;
     
     if (!cartId) {
       return NextResponse.json({ error: 'No cart found' }, { status: 404 });
     }
     
-    const itemId = parseInt(params.id);
+    // Extract ID from URL directly
+    const url = new URL(request.url);
+    const pathParts = url.pathname.split('/');
+    const idString = pathParts[pathParts.length - 1];
+    const itemId = parseInt(idString);
     
     if (isNaN(itemId)) {
       return NextResponse.json({ error: 'Invalid item ID' }, { status: 400 });
