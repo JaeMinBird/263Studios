@@ -170,11 +170,11 @@ export default function ProductPage() {
 
               {/* Quantity Selector */}
               <select
-                className="w-20 border border-black p-2 font-courier-prime text-sm text-black"
+                className="w-14 border border-black p-2 font-courier-prime text-sm text-black"
                 value={quantity}
                 onChange={(e) => setQuantity(parseInt(e.target.value))}
               >
-                {[...Array(10).keys()].map((i) => (
+                {[...Array(9).keys()].map((i) => (
                   <option key={i + 1} value={i + 1}>{i + 1}</option>
                 ))}
               </select>
