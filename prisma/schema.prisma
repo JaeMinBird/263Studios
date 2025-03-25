@@ -22,6 +22,7 @@ model Product {
   styles      Style[]
   sizes       Size[]
   cartItems   CartItem[]
+  orderItems  OrderItem[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -62,4 +63,68 @@ model CartItem {
 
   @@index([cartId])
   @@index([productId])
+}
+
+model Order {
+  id              String          @id @default(uuid())
+  orderNumber     String          @unique
+  customerId      String?
+  email           String
+  firstName       String
+  lastName        String
+  shippingAddress ShippingAddress?
+  items           OrderItem[]
+  subtotal        Decimal         @db.Decimal(10, 2)
+  shipping        Decimal         @db.Decimal(10, 2)
+  tax             Decimal         @db.Decimal(10, 2)
+  total           Decimal         @db.Decimal(10, 2)
+  status          OrderStatus     @default(PENDING)
+  paymentIntentId String?         @unique
+  shippingMethod  ShippingMethod
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 2)
+  size      String
+  style     String
+  name      String
+  image     String
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model ShippingAddress {
+  id            Int      @id @default(autoincrement())
+  orderId       String   @unique
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  address       String
+  addressLine2  String?
+  city          String
+  state         String
+  zipCode       String
+  country       String   @default("United States")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum ShippingMethod {
+  STANDARD
+  EXPRESS
 }

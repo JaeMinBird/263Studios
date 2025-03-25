@@ -11,17 +11,23 @@
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",
+    "@stripe/react-stripe-js": "^3.5.1",
+    "@stripe/stripe-js": "^6.1.0",
+    "@types/stripe": "^8.0.416",
     "framer-motion": "^12.4.10",
     "next": "^15.2.4",
+    "nodemailer": "^6.10.0",
     "postcss": "^8.5.3",
     "prisma": "^6.5.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "stripe": "^17.7.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.0.10",
     "@types/node": "^20.17.24",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
