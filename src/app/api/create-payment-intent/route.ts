@@ -22,12 +22,32 @@ export async function POST(request: Request) {
       );
     }
 
+    // Create a simplified version of order details for metadata
+    const metadataOrderDetails = {
+      items: orderDetails.items.map(item => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.price,
+        size: item.size,
+        style: item.style,
+        name: item.name,
+        // Remove image URL to save space
+      })),
+      customer: orderDetails.customer,
+      shippingAddress: orderDetails.shippingAddress,
+      shippingMethod: orderDetails.shippingMethod,
+      subtotal: orderDetails.subtotal,
+      shipping: orderDetails.shipping,
+      tax: orderDetails.tax,
+      total: orderDetails.total,
+    };
+
     // Create payment intent
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // Convert to cents
       currency: 'usd',
       metadata: {
-        orderDetails: JSON.stringify(orderDetails),
+        orderDetails: JSON.stringify(metadataOrderDetails),
       },
       payment_method_types: ['card'],
       automatic_payment_methods: {

@@ -142,14 +142,21 @@ export async function POST(request: Request) {
               },
             },
             items: {
-              create: orderDetails.items.map((item: any) => ({
-                productId: item.productId,
-                quantity: item.quantity,
-                price: parseFloat(item.price.toString()),
-                size: item.size,
-                style: item.style,
-                name: item.name,
-                image: item.image,
+              create: await Promise.all(orderDetails.items.map(async (item: any) => {
+                // Fetch the product to get the image URL
+                const product = await prisma.product.findUnique({
+                  where: { id: item.productId }
+                });
+
+                return {
+                  productId: item.productId,
+                  quantity: item.quantity,
+                  price: parseFloat(item.price.toString()),
+                  size: item.size,
+                  style: item.style,
+                  name: item.name,
+                  image: product?.image || '', // Use the image from the database
+                };
               })),
             },
           },
