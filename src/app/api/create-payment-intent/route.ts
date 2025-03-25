@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
     // Create a simplified version of order details for metadata
     const metadataOrderDetails = {
-      items: orderDetails.items.map(item => ({
+      items: orderDetails.items.map((item: { productId: any; quantity: any; price: any; size: any; style: any; name: any; }) => ({
         productId: item.productId,
         quantity: item.quantity,
         price: item.price,
