@@ -27,6 +27,25 @@ async function ensureCart() {
       expires: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
       path: '/' 
     });
+  } else {
+    // Verify cart exists in database
+    const existingCart = await prisma.cart.findUnique({
+      where: { id: cartId }
+    });
+    
+    if (!existingCart) {
+      // Create new cart if not found
+      const cart = await prisma.cart.create({
+        data: {}
+      });
+      cartId = cart.id;
+      
+      // Update cookie with new cart ID
+      cookieStore.set('cartId', cartId, { 
+        expires: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+        path: '/' 
+      });
+    }
   }
   
   return cartId;
