@@ -74,7 +74,7 @@ export default function CheckoutSuccessPage() {
       } catch (error) {
         console.error('Error handling success:', error);
         // Retry after 2 seconds if order not found (webhook might still be processing)
-        if (error.message?.includes('Order not found')) {
+        if (error instanceof Error && error.message.includes('Order not found')) {
           setTimeout(() => handleSuccess(), 2000);
         }
         setError(error instanceof Error ? error.message : 'An error occurred');
