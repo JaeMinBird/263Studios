@@ -9,7 +9,7 @@
 At the core of 263 STUDIOS is a commitment to minimalist design and typography-focused aesthetics. The project embraces negative space, monochromatic color schemes, and subtle animations to create an elegant shopping environment that puts the focus on the fashion products.
 
 ### Brand Identity
-![Brand Video Demo](/videos/brand.mp4)
+![Brand Video Demo](/public/videos/brand.mp4)
 
 The landing page features a full-screen brand video with a minimalist overlay, communicating the brand's identity through visual storytelling rather than excessive text explanations.
 
