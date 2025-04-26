@@ -66,27 +66,21 @@ export default function ProductPage() {
   }
 
   const handleAddToCart = async () => {
-    if (!product) return;
-    
-    if (selectedSize === '') {
-      alert('Please select a size');
-      return;
+    try {
+      await addToCart({
+        productId: parseInt(params.id as string),
+        name: product!.name,
+        price: product!.price,
+        style: product!.styles[selectedStyle].name,
+        size: selectedSize,
+        quantity: quantity,
+        image: product!.styles[selectedStyle].image
+      });
+      setIsInCart(true);
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+      // Optionally show an error message to the user
     }
-
-    const styleName = product.styles[selectedStyle]?.name || product.style;
-    const styleImage = product.styles[selectedStyle]?.image || product.image;
-
-    await addToCart({
-      productId: parseInt(product.id),
-      name: product.name,
-      price: product.price,
-      style: styleName,
-      size: selectedSize,
-      quantity: quantity,
-      image: styleImage
-    });
-
-    setIsInCart(true);
   };
 
   const handleRemoveFromCart = async () => {

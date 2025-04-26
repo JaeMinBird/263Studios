@@ -59,13 +59,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(item),
+        body: JSON.stringify({
+          productId: item.productId,
+          quantity: item.quantity,
+          size: item.size,
+          style: item.style
+        }),
       });
       
-      if (!response.ok) throw new Error('Failed to add item to cart');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Failed to add item to cart: ${errorData.error || response.statusText}`);
+      }
       await fetchCart();
     } catch (error) {
       console.error('Error adding to cart:', error);
+      throw error;
     } finally {
       setIsLoading(false);
     }

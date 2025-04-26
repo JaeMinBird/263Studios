@@ -7,6 +7,16 @@ async function getCartId() {
   const cookieStore = await cookies();
   let cartId = cookieStore.get('cartId')?.value;
   
+  // Verify the cart exists in the database
+  if (cartId) {
+    const cart = await prisma.cart.findUnique({
+      where: { id: cartId }
+    });
+    if (!cart) {
+      return null; // Return null if cart doesn't exist in DB
+    }
+  }
+  
   return cartId;
 }
 
@@ -27,6 +37,15 @@ async function ensureCart() {
       expires: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
       path: '/' 
     });
+  }
+  
+  // Verify one last time that the cart exists
+  const cart = await prisma.cart.findUnique({
+    where: { id: cartId }
+  });
+  
+  if (!cart) {
+    throw new Error('Failed to create or retrieve cart');
   }
   
   return cartId;
@@ -82,7 +101,9 @@ export async function GET() {
 // POST /api/cart - Add item to cart
 export async function POST(request: Request) {
   try {
+    // Ensure cart exists and get cartId
     const cartId = await ensureCart();
+    
     const data = await request.json();
     const { productId, quantity, size, style } = data;
     
@@ -94,7 +115,7 @@ export async function POST(request: Request) {
         received: { productId, quantity, size, style } 
       }, { status: 400 });
     }
-    
+
     // Get product details
     const product = await prisma.product.findUnique({
       where: { id: productId },

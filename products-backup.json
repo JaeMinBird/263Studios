@@ -1,0 +1,113 @@
+[
+  {
+    "id": 6,
+    "name": "Test Product",
+    "price": 99.99,
+    "image": "/images/test.jpg",
+    "description": null,
+    "styles": [
+      {
+        "name": "Black",
+        "image": "/images/black.jpg"
+      }
+    ],
+    "sizes": [
+      {
+        "name": "M"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Denim Jacket",
+    "price": 70,
+    "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/476942/item/usgoods_64_476942_3x4.jpg?width=400",
+    "description": "Classic denim jacket with a modern fit.",
+    "styles": [
+      {
+        "name": "Denim",
+        "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/476942/item/usgoods_64_476942_3x4.jpg?width=400"
+      }
+    ],
+    "sizes": [
+      {
+        "name": "S"
+      },
+      {
+        "name": "M"
+      },
+      {
+        "name": "L"
+      },
+      {
+        "name": "XL"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Bomber Jacket",
+    "price": 75,
+    "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/474936/item/usgoods_09_474936_3x4.jpg",
+    "description": "A classic bomber jacket with modern tailoring.",
+    "styles": [
+      {
+        "name": "Black",
+        "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/474936/item/usgoods_09_474936_3x4.jpg"
+      },
+      {
+        "name": "Wine",
+        "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/474936/item/usgoods_19_474936_3x4.jpg?width=400"
+      }
+    ],
+    "sizes": [
+      {
+        "name": "S"
+      },
+      {
+        "name": "M"
+      },
+      {
+        "name": "L"
+      },
+      {
+        "name": "XL"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Puffer Jacket",
+    "price": 120,
+    "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/469896/item/usgoods_01_469896_3x4.jpg?width=400",
+    "description": "Warm and lightweight puffer jacket.",
+    "styles": [
+      {
+        "name": "Off White",
+        "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/469896/item/usgoods_01_469896_3x4.jpg?width=400"
+      },
+      {
+        "name": "Black",
+        "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/469896/item/usgoods_09_469896_3x4.jpg?width=400"
+      },
+      {
+        "name": "Blue",
+        "image": "https://image.uniqlo.com/UQ/ST3/us/imagesgoods/469896/item/usgoods_67_469896_3x4.jpg?width=400"
+      }
+    ],
+    "sizes": [
+      {
+        "name": "S"
+      },
+      {
+        "name": "M"
+      },
+      {
+        "name": "L"
+      },
+      {
+        "name": "XL"
+      }
+    ]
+  }
+]
